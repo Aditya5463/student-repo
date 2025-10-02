@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">👨‍💼 Admin Dashboard</h2>
+
+    <div class="alert alert-info">
+        You are logged in as <strong>{{ current_user.username }}</strong> (Admin).
+    </div>
+
+    <table class="table table-hover table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Joined</th>
+                <th>Last Login</th>
+                <th>Total Assessments</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>
+                    {% if user.role == 'admin' %}
+                        <span class="badge bg-danger">Admin</span>
+                    {% else %}
+                        <span class="badge bg-secondary">User</span>
+                    {% endif %}
+                </td>
+                <td>{{ user.join_date.strftime("%Y-%m-%d %H:%M") }}</td>
+                <td>
+                    {% if user.last_login %}
+                        {{ user.last_login.strftime("%Y-%m-%d %H:%M") }}
+                    {% else %}
+                        Never
+                    {% endif %}
+                </td>
+                <td>{{ user.results|length }}</td>
+                <td>
+                    <a href="{{ url_for('admin_user_detail', user_id=user.id) }}" class="btn btn-sm btn-primary">
+                        View Details
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

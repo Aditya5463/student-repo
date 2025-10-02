@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>My Account Profile</h1>
+    <p>View your account information and statistics.</p>
+</div>
+
+<div class="profile-layout-grid">
+    
+    <div class="profile-details-column">
+        <div class="card">
+            <div class="card-header">
+                <h3>User Information</h3>
+            </div>
+            <div class="card-body">
+                <ul class="user-details-list">
+                    <li>
+                        <span class="detail-label">Username</span>
+                        <span class="detail-value">{{ user.username }}</span>
+                    </li>
+                    <li>
+                        <span class="detail-label">Email</span>
+                        <span class="detail-value">{{ user.email }}</span>
+                    </li>
+                    <li>
+                        <span class="detail-label">Member Since</span>
+                        <span class="detail-value">{{ user.join_date.strftime('%B %d, %Y') }}</span>
+                    </li>
+                    <li>
+                        <span class="detail-label">Account Role</span>
+                        <span class="detail-value user-role-badge role-{{ user.role }}">{{ user.role|title }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-actions-column">
+        <div class="card">
+            <div class="card-header">
+                <h3>Account Statistics</h3>
+            </div>
+            <div class="card-body">
+                <ul class="user-stats-list">
+                    <li>
+                        <a href="{{ url_for('history') }}">
+                            <span class="stat-label">Total Assessments Taken</span>
+                            <span class="stat-value">{{ user.results|length }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('goals') }}">
+                            <span class="stat-label">Total Goals Set</span>
+                            <span class="stat-value">{{ user.goals|length }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+.profile-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.profile-details-column, .profile-actions-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.card {
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+}
+
+.card-header {
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+}
+
+.user-details-list, .user-stats-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.user-details-list li, .user-stats-list li {
+    margin-bottom: 0.75rem;
+}
+
+.detail-label { font-weight: 600; margin-right: 0.5rem; }
+.stat-label { font-weight: 600; }
+.stat-value { float: right; }
+
+.user-role-badge {
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    font-weight: 500;
+    color: white;
+    text-transform: capitalize;
+}
+
+.role-admin { background-color: var(--accent-color); }
+.role-user { background-color: var(--primary-color); }
+
+@media (max-width: 768px) {
+    .profile-layout-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}

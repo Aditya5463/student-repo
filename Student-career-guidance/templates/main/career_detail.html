@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}{{ career_name }} Career Profile{% endblock %}
+
+{% block content %}
+<div class="card career-detail-card">
+    
+    <div class="card-header career-detail-header">
+        <span class="eyebrow-text">AI-Powered Career Profile</span>
+        <h1>{{ career_name }}</h1>
+    </div>
+
+    <div class="career-detail-body">
+        <section class="detail-section">
+            <h3 class="section-title">📋 Job Overview</h3>
+            <p class="section-content">{{ career_info.description }}</p>
+        </section>
+
+        <section class="detail-section">
+            <h3 class="section-title">☀️ A Day in the Life</h3>
+            <p class="section-content">{{ career_info.day_in_life }}</p>
+        </section>
+
+        <section class="detail-section">
+            <h3 class="section-title">💰 Salary & Market Outlook</h3>
+            <p class="section-content">
+                In India, the estimated annual salary for this role typically ranges from <strong>{{ career_info.avg_salary }}</strong>.
+                Note that this can vary significantly based on your years of experience, the city you work in, the size of the company, and your specific skill set.
+            </p>
+        </section>
+
+        <section class="detail-section">
+            <h3 class="section-title">🔑 Key Skills You'll Need to Succeed</h3>
+            <p>To excel in this role, focus on developing proficiency in the following areas. Use this list to guide your learning and goal setting.</p>
+            <div class="skill-list-container">
+                <ul class="skill-list">
+                    {% for skill in career_info.required_skills %}
+                        <li class="skill-item">{{ skill }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+
+        <section class="detail-section">
+            <h3 class="section-title">📈 Potential Career Path</h3>
+            <p>This role is often a stepping stone to more senior positions. A typical career trajectory might look like this:</p>
+            <div class="career-path-timeline">
+                {% for role in career_info.career_path %}
+                <div class="timeline-item">{{ role }}</div>
+                {% if not loop.last %}
+                <div class="timeline-connector">→</div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="detail-section">
+            <h3 class="section-title">📚 Recommended Learning Resources</h3>
+            <p>Here are some excellent platforms and resources to start building the necessary skills for a career as a {{ career_name }}:</p>
+            <ul class="resource-list">
+                {% for resource in career_info.resources %}
+                    <li><a href="{{ resource.url }}" target="_blank" class="resource-link">{{ resource.name }}</a></li>
+                {% else %}
+                    <li>No specific resources are listed for this career yet. Try searching for online courses related to the key skills mentioned above.</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <div class="final-cta-section text-center">
+            <h3>Ready to Start Your Journey?</h3>
+            <p>Turn this information into a concrete plan. Go to your goals page now and add your first learning objective.</p>
+            <a href="{{ url_for('goals') }}" class="btn btn-primary btn-large">Set My First Goal</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

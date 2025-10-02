@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CareerCompass AI - Your personal AI-powered career guidance platform.">
+    <meta name="keywords" content="AI, Career, Guidance, Student, Job, Future, Machine Learning">
+    <meta name="author" content="CareerCompass AI">
+
+    <title>{% block title %}CareerCompass AI{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <header class="navbar-container">
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <a href="{{ url_for('landing') }}" class="logo">🚀 CareerCompass AI</a>
+            </div>
+            
+            <div class="navbar-search">
+                <form action="{{ url_for('search') }}" method="GET" class="search-form">
+                    <input type="search" name="query" placeholder="Search careers..." class="search-input">
+                    <button type="submit" class="search-button">Search</button>
+                </form>
+            </div>
+
+            <div class="navbar-links">
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+                    <a href="{{ url_for('profile') }}" class="nav-link">Profile</a>
+                    {% if current_user.role == 'admin' %}
+                        <a href="{{ url_for('admin_dashboard') }}" class="nav-link admin-link">Admin Panel</a>
+                    {% endif %}
+                    <a href="{{ url_for('logout') }}" class="nav-link btn btn-secondary">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+                    <a href="{{ url_for('login') }}" class="nav-link btn btn-primary">Sign Up</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages-container">
+                    {% for category, message in messages %}
+                        <div class="flash flash-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4 class="footer-heading">CareerCompass AI</h4>
+                    <p class="footer-text">
+                        Leveraging machine learning to provide students and professionals with insightful, data-driven career guidance for a successful future.
+                    </p>
+                </div>
+
+                <div class="footer-column">
+                    <h4 class="footer-heading">Navigate</h4>
+                    <ul class="footer-links">
+                        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('assessment') }}">Take Assessment</a></li>
+                        <li><a href="{{ url_for('history') }}">My History</a></li>
+                        <li><a href="{{ url_for('goals') }}">My Goals</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4 class="footer-heading">Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h4 class="footer-heading">Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <script>document.write(new Date().getFullYear())</script> CareerCompass AI. All rights reserved. Built with passion in Ahmedabad, India.</p>
+            </div>
+        </div>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+
+</body>
+</html>

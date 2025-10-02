@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Search Results for "{{ query }}"{% endblock %}
+
+{% block content %}
+<div class="card">
+    
+    <div class="card-header">
+        <h1>Search Results for: <span class="highlight-text">"{{ query }}"</span></h1>
+    </div>
+
+    <div class="card-body">
+        {% if results %}
+            <div class="search-summary">
+                <p>We found <strong>{{ results|length }}</strong> matching career profile(s). Explore them below to learn more.</p>
+            </div>
+            
+            <div class="search-results-list">
+                {% for name, data in results.items() %}
+                <div class="search-result-item">
+                    <div class="result-item-content">
+                        <h3 class="result-item-title">{{ name }}</h3>
+                        <p class="result-item-description">
+                            {{ data.description[:200] }}...
+                        </p>
+                    </div>
+                    <div class="result-item-action">
+                        <a href="{{ url_for('career_detail', career_name=name) }}" class="btn btn-primary">View Detailed Profile</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        {% else %}
+            <div class="empty-state text-center">
+                <h3>No Results Found</h3>
+                <p>We couldn't find any career profiles matching your search for "{{ query }}".</p>
+                <p><strong>Suggestions:</strong></p>
+                <ul>
+                    <li>Make sure all words are spelled correctly.</li>
+                    <li>Try different or more general keywords.</li>
+                    <li>Try searching for a single word (e.g., "Software" or "Data").</li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

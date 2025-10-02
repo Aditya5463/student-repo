@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}User Details{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-3">👤 User Details: {{ user.username }}</h2>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <p><strong>User ID:</strong> {{ user.id }}</p>
+            <p><strong>Role:</strong> {{ user.role }}</p>
+            <p><strong>Joined:</strong> {{ user.join_date.strftime("%Y-%m-%d %H:%M") }}</p>
+            <p><strong>Last Login:</strong>
+                {% if user.last_login %}
+                    {{ user.last_login.strftime("%Y-%m-%d %H:%M") }}
+                {% else %}
+                    Never
+                {% endif %}
+            </p>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">⬅ Back to Dashboard</a>
+        </div>
+    </div>
+
+    <h4>📊 Assessment History</h4>
+    {% if history_pages.items %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Inputs</th>
+                    <th>Recommended Career</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in history_pages.items %}
+                    <tr>
+                        <td>{{ result.timestamp.strftime("%Y-%m-%d %H:%M") }}</td>
+                        <td><pre>{{ result.inputs_json }}</pre></td>
+                        <td><strong>{{ result.recommended_career }}</strong></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <nav>
+            <ul class="pagination">
+                {% if history_pages.has_prev %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('admin_user_detail', user_id=user.id, page=history_pages.prev_num) }}">Previous</a>
+                    </li>
+                {% endif %}
+                {% for page_num in history_pages.iter_pages() %}
+                    {% if page_num %}
+                        <li class="page-item {% if page_num == history_pages.page %}active{% endif %}">
+                            <a class="page-link" href="{{ url_for('admin_user_detail', user_id=user.id, page=page_num) }}">{{ page_num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if history_pages.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('admin_user_detail', user_id=user.id, page=history_pages.next_num) }}">Next</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% else %}
+        <p>No assessment history available for this user.</p>
+    {% endif %}
+</div>
+{% endblock %}

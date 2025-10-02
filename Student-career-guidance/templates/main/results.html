@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Your AI Recommendation{% endblock %}
+
+{% block content %}
+<div class="card text-center results-card">
+
+    <div class="results-header">
+        <div class="results-icon">🎉</div>
+        <h1>Your AI Recommendation is Ready!</h1>
+        <p class="lead-text">
+            After analyzing the unique pattern of your skills and interests, our machine learning model
+            has identified a strong potential career path for you.
+        </p>
+    </div>
+
+    <div class="results-highlight-section">
+        <p>Based on your profile, we recommend exploring a career as a:</p>
+        <div class="recommended-career-box">
+            <h2 class="recommended-career-title">{{ career }}</h2>
+        </div>
+    </div>
+
+    <div class="whats-next-section">
+        <h3>What's Next? Turn Insight into Action.</h3>
+        <p>This recommendation is your starting line, not the finish line. Here's how to make the most of this insight:</p>
+        
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h4>Explore the Profile</h4>
+                <p>Dive deep into the career profile to understand the day-to-day tasks, salary expectations, and required skills.</p>
+                <a href="{{ url_for('career_detail', career_name=career) }}" class="btn btn-primary full-width">Explore Career Details</a>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h4>Set Your First Goal</h4>
+                <p>Identify a key skill from the profile that you want to develop. Go to your goals page and make it your first objective.</p>
+                <a href="{{ url_for('goals') }}" class="btn btn-secondary full-width">Go to My Goals</a>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h4>Reflect & Re-Assess</h4>
+                <p>Your interests can change. Feel free to take the assessment again anytime to see how your growth impacts your recommendations.</p>
+                 <a href="{{ url_for('assessment') }}" class="btn btn-secondary full-width">Take Assessment Again</a>
+            </div>
+        </div>
+    </div>
+
+</div> {% endblock %}

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Login or Create Your Account{% endblock %}
+
+{% block content %}
+<div class="login-page-container">
+    <div class="login-grid">
+        <div class="form-column">
+            
+            <!-- LOGIN FORM -->
+            <div class="card form-card">
+                <div class="card-header">
+                    <h2>Welcome Back!</h2>
+                    <p>Log in to access your dashboard and continue your journey.</p>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('login') }}" method="POST" class="styled-form">
+                        <div class="form-group">
+                            <label for="login-email">Email</label>
+                            <input type="email" id="login-email" name="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" name="password" placeholder="Enter your password" required>
+                        </div>
+                        <div class="form-links">
+                            <a href="{{ url_for('forgot_password') }}">Forgot Password?</a>
+                           
+                        </div>
+                        <button type="submit" class="btn btn-primary form-submit-button">Login</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- SIGNUP FORM -->
+            <div class="card form-card">
+                <div class="card-header">
+                    <h2>New Here? Create an Account</h2>
+                    <p>Join for free and unlock your personalized career insights.</p>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('signup') }}" method="POST" class="styled-form">
+                        <div class="form-group">
+                            <label for="signup-username">Username</label>
+                            <input type="text" id="signup-username" name="username" placeholder="Choose a unique username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-email">Email</label>
+                            <input type="email" id="signup-email" name="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-password">Password</label>
+                            <input type="password" id="signup-password" name="password" placeholder="At least 8 characters" required minlength="8">
+                        </div>
+                        <p class="form-note">By signing up, you agree to our Terms of Service.</p>
+                        <button type="submit" class="btn btn-secondary form-submit-button">Create My Account</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="info-column">
+            <div class="info-card">
+                <h3 class="info-title">Unlock Your Potential</h3>
+                <p class="info-description">
+                    Creating an account gives you immediate access to a suite of powerful tools designed to bring clarity to your career path.
+                </p>
+                <ul class="info-feature-list">
+                    <li class="info-feature-item">
+                        <span class="icon">🤖</span>
+                        <div>
+                            <strong>AI-Powered Recommendations</strong>
+                            <p>Get unbiased, data-driven career matches.</p>
+                        </div>
+                    </li>
+                    <li class="info-feature-item">
+                        <span class="icon">📈</span>
+                        <div>
+                            <strong>Personalized Goal Tracking</strong>
+                            <p>Set and achieve the skills needed for your dream job.</p>
+                        </div>
+                    </li>
+                    <li class="info-feature-item">
+                        <span class="icon">📚</span>
+                        <div>
+                            <strong>In-Depth Career Resources</strong>
+                            <p>Explore detailed profiles, salary data, and more.</p>
+                        </div>
+                    </li>
+                    <li class="info-feature-item">
+                        <span class="icon">🏛️</span>
+                        <div>
+                            <strong>Admin Panel Access</strong>
+                            <p>The first registered user gains administrative privileges.</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="info-footer">
+                    <p><strong>Your data is safe with us.</strong> We respect your privacy and never share your personal information.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

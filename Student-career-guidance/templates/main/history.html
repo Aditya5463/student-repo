@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}My Assessment History{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1>Assessment History</h1>
+        <p>Review your past career recommendations. Tracking your journey can reveal how your interests and skills have evolved over time.</p>
+    </div>
+
+    <div class="card-body">
+        {% if history_pages.items %}
+            <div class="history-list">
+                {% for item in history_pages.items %}
+                <div class="history-item-card">
+                    <div class="history-item-header">
+                        <h3 class="history-item-title">{{ item.recommended_career }}</h3>
+                        <span class="history-item-date">Recommended on: {{ item.timestamp.strftime('%B %d, %Y at %I:%M %p') }}</span>
+                    </div>
+                    <div class="history-item-body">
+                        <p>This recommendation was based on your self-assessed skill ratings at the time. You can explore the detailed profile again to see if it still aligns with your goals.</p>
+                    </div>
+                    <div class="history-item-footer">
+                        <a href="{{ url_for('career_detail', career_name=item.recommended_career) }}" class="btn btn-primary">View Full Profile</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <nav class="pagination-nav">
+                <ul class="pagination">
+                    <li class="page-item {% if not history_pages.has_prev %}disabled{% endif %}">
+                        <a class="page-link" href="{{ url_for('history', page=history_pages.prev_num) if history_pages.has_prev else '#' }}">Previous</a>
+                    </li>
+                    {% for page_num in history_pages.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                        {% if page_num %}
+                            <li class="page-item {% if page_num == history_pages.page %}active{% endif %}">
+                                <a class="page-link" href="{{ url_for('history', page=page_num) }}">{{ page_num }}</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled"><span class="page-link">...</span></li>
+                        {% endif %}
+                    {% endfor %}
+                    <li class="page-item {% if not history_pages.has_next %}disabled{% endif %}">
+                        <a class="page-link" href="{{ url_for('history', page=history_pages.next_num) if history_pages.has_next else '#' }}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        {% else %}
+            <div class="empty-state">
+                <h4>No History Found</h4>
+                <p>You have not taken any assessments yet. Complete your first assessment to start building your career history.</p>
+                <a href="{{ url_for('assessment') }}" class="btn btn-primary">Take First Assessment</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

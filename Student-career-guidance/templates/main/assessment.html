@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}AI Career Assessment{% endblock %}
+
+{% block content %}
+<div class="assessment-layout-grid">
+    <div class="assessment-form-column">
+        <div class="card">
+            <div class="card-header">
+                <h1>AI-Powered Career Assessment</h1>
+                <p>
+                    Your journey to career clarity starts here. Please rate your current skill level and interest in the following areas.
+                    <strong>Be honest with your self-assessment</strong>, as this data directly fuels our AI's recommendation engine.
+                </p>
+            </div>
+
+            <div class="card-body">
+                <form action="{{ url_for('process_assessment') }}" method="POST" id="assessment-form">
+                    
+                    <fieldset class="form-fieldset">
+                        <legend class="fieldset-legend">Core Technical Skills</legend>
+                        {% for field in fields[:7] %}
+                        <div class="form-group-grid">
+                            <label for="{{ field }}" class="form-grid-label">{{ field.replace('_', ' ') | title }}</label>
+                            <select name="{{ field }}" id="{{ field }}" class="form-grid-select" required>
+                                <option value="" disabled selected>Select Level</option>
+                                <option value="1">1 - Very Low / No Interest</option>
+                                <option value="2">2 - Low / Beginner</option>
+                                <option value="3">3 - Neutral / Competent</option>
+                                <option value="4">4 - High / Proficient</option>
+                                <option value="5">5 - Very High / Expert</option>
+                            </select>
+                        </div>
+                        {% endfor %}
+                    </fieldset>
+
+                    <fieldset class="form-fieldset">
+                        <legend class="fieldset-legend">Management & Communication</legend>
+                        {% for field in fields[7:14] %}
+                        <div class="form-group-grid">
+                            <label for="{{ field }}" class="form-grid-label">{{ field.replace('_', ' ') | title }}</label>
+                            <select name="{{ field }}" id="{{ field }}" class="form-grid-select" required>
+                                <option value="" disabled selected>Select Level</option>
+                                <option value="1">1 - Very Low</option>
+                                <option value="2">2 - Low</option>
+                                <option value="3">3 - Neutral</option>
+                                <option value="4">4 - High</option>
+                                <option value="5">5 - Very High</option>
+                            </select>
+                        </div>
+                        {% endfor %}
+                    </fieldset>
+
+                     <fieldset class="form-fieldset">
+                        <legend class="fieldset-legend">Specialized & Creative Skills</legend>
+                        {% for field in fields[14:] %}
+                        <div class="form-group-grid">
+                            <label for="{{ field }}" class="form-grid-label">{{ field.replace('_', ' ') | title }}</label>
+                            <select name="{{ field }}" id="{{ field }}" class="form-grid-select" required>
+                                <option value="" disabled selected>Select Level</option>
+                                <option value="1">1 - Very Low</option>
+                                <option value="2">2 - Low</option>
+                                <option value="3">3 - Neutral</option>
+                                <option value="4">4 - High</option>
+                                <option value="5">5 - Very High</option>
+                            </select>
+                        </div>
+                        {% endfor %}
+                    </fieldset>
+
+                    <div class="form-submission-area">
+                        <button type="submit" class="btn btn-primary btn-large">Analyze My Skills & Predict Career</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="assessment-info-column">
+        <div class="card info-card">
+            <h3>Why This Matters</h3>
+            <p>Our model doesn't just look at one or two high scores. It analyzes the unique <strong>pattern of all your ratings</strong> to find a career that best matches your overall profile.</p>
+            <hr>
+            <h4>Pro-Tips for an Accurate Result:</h4>
+            <ul>
+                <li><strong>Think Holistically:</strong> Consider both your formal training and your hobbies or self-taught skills.</li>
+                <li><strong>Be Realistic:</strong> A '5' should represent an area where you feel highly confident and knowledgeable.</li>
+                <li><strong>It's a Snapshot:</strong> This assessment reflects you *today*. You can always take it again as you learn and grow!</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

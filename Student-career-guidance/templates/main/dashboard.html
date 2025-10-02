@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Your Dashboard{% endblock %}
+
+{% block content %}
+<section class="dashboard-header card">
+    <div class="header-content">
+        <h1>Welcome back, <span class="highlight-text">{{ name }}</span>!</h1>
+        <p>This is your personal career headquarters. From here, you can analyze your recommendations, track your growth, and plan your next professional move.</p>
+    </div>
+</section>
+
+<section class="analytics-grid">
+    <div class="stat-card">
+        <div class="stat-icon">📊</div>
+        <div class="stat-info">
+            <span class="stat-value">{{ stats.total_assessments }}</span>
+            <span class="stat-label">Total Assessments Taken</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-info">
+            <span class="stat-value">{{ stats.active_goals }}</span>
+            <span class="stat-label">Active Goals</span>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">✅</div>
+        <div class="stat-info">
+            <span class="stat-value">{{ stats.completed_goals }}</span>
+            <span class="stat-label">Completed Goals</span>
+        </div>
+    </div>
+</section>
+
+<section class="dashboard-main-grid">
+    
+    <div class="dashboard-primary-column">
+        <div class="card dashboard-card">
+            <div class="card-header">
+                <h3>Your Latest AI Recommendation</h3>
+            </div>
+            <div class="card-body">
+                {% if last_result %}
+                    <p>Our analysis of your most recent assessment on <strong>{{ last_result.timestamp.strftime('%B %d, %Y') }}</strong> suggests a strong fit for:</p>
+                    <div class="recommendation-highlight">
+                        <h2>{{ last_result.recommended_career }}</h2>
+                    </div>
+                    <p>Ready to learn what this career is all about? Dive into our detailed profile to explore daily tasks, salary expectations, and required skills.</p>
+                    <div class="card-actions">
+                        <a href="{{ url_for('career_detail', career_name=last_result.recommended_career) }}" class="btn btn-primary">Explore This Career</a>
+                    </div>
+                {% else %}
+                    <h3>Discover Your Path</h3>
+                    <p>You haven't taken an assessment yet. Let our AI analyze your skills to find your ideal career. Your first recommendation is just a few minutes away.</p>
+                    <div class="card-actions">
+                        <a href="{{ url_for('assessment') }}" class="btn btn-primary">Take Your First Assessment</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-secondary-column">
+        <div class="card dashboard-card">
+            <div class="card-header">
+                <h3>Continue Your Journey</h3>
+            </div>
+            <div class="card-body">
+                <ul class="quick-actions-list">
+                    <li><a href="{{ url_for('assessment') }}" class="btn btn-secondary full-width">Take a New Assessment</a></li>
+                    <li><a href="{{ url_for('history') }}" class="btn btn-secondary full-width">Review Full History</a></li>
+                    <li><a href="{{ url_for('goals') }}" class="btn btn-secondary full-width">Manage Your Goals</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card dashboard-card">
+            <div class="card-header">
+                <h3>💡 Career Tip of the Day</h3>
+            </div>
+            <div class="card-body">
+                <p><strong>Never stop learning.</strong> Dedicate just 30 minutes each day to learning a new skill related to your target career. Compounding knowledge is your greatest professional asset.</p>
+            </div>
+        </div>
+    </div>
+
+</section>
+{% endblock %}
