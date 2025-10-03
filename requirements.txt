@@ -4,5 +4,7 @@ Flask-Login
 Flask-Bcrypt
 pandas
 scikit-learn
-gunicorn
+numpy
 matplotlib
+sqlalchemy
+gunicorn
