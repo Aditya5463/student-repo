@@ -4,4 +4,5 @@ Flask-Login
 Flask-Bcrypt
 pandas
 scikit-learn
+gunicorn==21.2.0
 matplotlib
