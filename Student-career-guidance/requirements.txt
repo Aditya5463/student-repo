@@ -3,9 +3,10 @@ Flask-SQLAlchemy
 Flask-Login
 Flask-Bcrypt
 pandas
-scikit-learn
+scikit-learn==1.6.1
 numpy
 matplotlib
 sqlalchemy
 gunicorn==21.2.0
 python-dotenv==1.0.0
+
