@@ -7,4 +7,5 @@ scikit-learn
 numpy
 matplotlib
 sqlalchemy
-gunicorn
+gunicorn==21.2.0
+
